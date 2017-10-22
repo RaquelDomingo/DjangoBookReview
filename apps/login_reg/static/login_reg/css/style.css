@@ -1,0 +1,27 @@
+input {
+  display: block;
+  margin: 5px;
+  width: 200px;
+}
+  input.buttons {
+    background-color: #4d94ff;
+    color: white;
+    margin: 5px;
+    width: 125px;
+    border-radius: 5px;
+    margin-top: 15px;
+    margin-left: 80px;
+  }
+
+h2 {
+  text-decoration: underline;
+}
+
+p {
+  font-style: italic;
+  color: purple;
+}
+
+li {
+  color: red;
+}

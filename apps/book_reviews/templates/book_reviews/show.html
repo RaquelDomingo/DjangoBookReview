@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Book Reviews</title>
+    {% load staticfiles %}
+    {% load range_maker %}
+    <link rel="stylesheet" href="{% static 'book_reviews/css/main.css' %}">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="{% url 'reviews:index' %}">Home</a>
+        <a href="{% url 'users:logout' %}">Logout</a>
+      </nav>
+    </header>
+    <h1>{{book.title}}</h1>
+    <h3>Author: {{book.author.name}}</h3>
+
+    <div class="recent">
+      {% for review in book.review_set.all %}
+      <div class="review">
+        <h5>Rating</h5>
+        {% for i in review.rating|range_maker %}
+        <img class='star' src="{% static 'book_reviews/imgs/star.gif' %}" alt="star">
+        {% endfor %}
+        <p><a href="{% url 'reviews:show_user' id=review.user.id %}">{{review.user.first_name}}</a> says: {{review.content}}</p>
+        <p>Posted on {{review.created_at}}</p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="new-review">
+      <h1>Add a new review</h1>
+      <form action="{% url 'reviews:create' %}" method='post'>
+        {% csrf_token %}
+        <input type="hidden" name="book_id" value="{{book.id}}">
+        <h4>Review:</h4>
+        <textarea name="content" rows="8" cols="40"></textarea>
+        <p>Rating:</p>
+        <select name="rating">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+        <input type="submit" value="Submit new review">
+    </div>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Book Reviews</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'book_reviews/css/main.css' %}">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="{% url 'reviews:index' %}">Home</a>
+        <a href="{% url 'users:logout' %}">Logout</a>
+      </nav>
+    </header>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <h1>Add a new book/review</h1>
+    <form action="{% url 'reviews:create' %}" method='post'>
+      {% csrf_token %}
+      Book Title
+      <select name="book_id">
+        <option value="None">Harry Potter: The Sorcerer's Stone</option>
+        <option value="None">The Hunger Game: Fastfood Series</option>
+        <option value="None">The Life of Pie</option>
+        <option value="None">The Scrapbook</option>
+        <option value="None">Frozen Elsa: Autobiography</option>
+        <!-- Or allow user to choose current book in database -->
+        {% for book in books %}
+        <option value="{{book.id}}">{{book.title}}</option>
+        {% endfor %}
+      </select>
+      <p>...or add a new book:</p>
+      <input type="text" name="new_book" placeholder='Book Title'>
+      Author Name
+      <select name="author_id">
+        <option value="None">Stephen King</option>
+        <option value="None">Veronica Roth</option>
+        <option value="None">J.K. Rowling</option>
+        <option value="None">Yann Martel</option>
+        <option value="None">Mark Twain</option>
+        <!-- Or allow user to choose current author in database -->
+        {% for author in authors %}
+        <option value="{{author.id}}">{{author.name}}</option>
+        {% endfor %}
+      </select>
+      <p>...or add a new author:</p>
+      <input type="text" name="new_author" placeholder='Author Name'>
+      <h4>Review:</h4>
+      <textarea name="content" rows="8" cols="40"></textarea>
+      <p>Rating:</p>
+      <select name="rating">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="4">5</option>
+      </select>
+      <input type="submit" value="Submit new review">
+    </form>
+
+  </body>
+</html>

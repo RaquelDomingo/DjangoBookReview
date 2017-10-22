@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Book Reviews</title>
+    {% load staticfiles %}
+    {% load range_maker %}
+    <link rel="stylesheet" href="{% static 'book_reviews/css/main.css' %}">
+  </head>
+  <body>
+    <header>
+      <p>Welcome {{ request.session.user.first_name }}</p>
+      <nav>
+        <a href="{% url 'reviews:new' %}">Add Book and Review</a>
+        <a href="{% url 'users:logout' %}">Logout</a>
+      </nav>
+    </header>
+    <h1>Recent book reviews!</h1>
+    <div class="recent">
+      {% for review in reviews %}
+      <div class="review">
+        <h4><a href="{% url 'reviews:show' id=review.book.id %}">{{review.book.title}}</a></h4>
+        <h5>Rating</h5>
+        {% for i in review.rating|range_maker %}
+        <img class='star' src="{% static 'book_reviews/imgs/star.gif' %}" alt="star">
+        {% endfor %}
+        <p>{{review.user.first_name}} says: {{review.content}}</p>
+        <p>Posted on {{review.created_at}}</p>
+        
+      </div>
+      {% endfor %}
+    </div>
+    <div class="all-books">
+      <h3>All books</h3>
+      {% for book in books %}
+      <p><a href="{% url 'reviews:show' id=book.id %}">{{book.title}}</a></p>
+      {% endfor %}
+    </div>
+  </body>
+</html>

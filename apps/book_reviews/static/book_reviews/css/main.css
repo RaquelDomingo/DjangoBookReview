@@ -1,0 +1,35 @@
+* {
+  font-family: monospace;
+}
+
+header p {
+  display: inline-block;
+}
+
+nav {
+  float: right;
+  margin-right: 100px;
+}
+
+input {
+  display: block;
+  margin: 10px 0;
+}
+
+div.recent, div.all-books {
+  display: inline-block;
+  margin: 10px 20px;
+}
+
+div.all-books {
+  border: 1px solid black;
+  overflow: scroll;
+  height: 200px;
+  width: 200px;
+  padding-left: 15px;
+  vertical-align: top;
+}
+
+img.star {
+  height: 15px;
+}

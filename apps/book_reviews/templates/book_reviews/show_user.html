@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Book Reviews</title>
+    {% load staticfiles %}
+    {% load range_maker %}
+    <link rel="stylesheet" href="{% static 'book_reviews/css/main.css' %}">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="{% url 'reviews:index' %}">Home</a>
+        <a href="{% url 'users:logout' %}">Logout</a>
+      </nav>
+    </header>
+    <h1>User name: {{user.first_name}} {{user.last_name}}</h1>
+    <h3>Email: {{user.email}}</h3>
+    <h3>Total reviews: {{user.total_reviews}}</h3>
+    <h4>Posted reviews on the following books:</h4>
+    {% for review in user.review_set.all %}
+    <p><a href="{% url 'reviews:show' id=review.book.id %}">{{review.book.title}}</a></p>
+    {% endfor %}
+  </body>
+</html>
